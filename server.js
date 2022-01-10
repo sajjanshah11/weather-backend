@@ -4,13 +4,15 @@ const userRoutes  = require('./routes/userRoutes');
 const cityRoutes = require('./routes/cityRoutes');
 // const City = require('../models/cityModel');
 const mostRoutes = require('./routes/mostRouter');
+const cors = require('cors')
 
 
 // set up our express app
 const app = express();
-const router= express.Router();
-// connect to mongodb
+// const router= express.Router();
 
+app.use(cors())
+// connect to mongodb
 let mongodb = "mongodb+srv://weather:12345@cluster0.jtsgl.mongodb.net/weather?retryWrites=true&w=majority"
 try {
     mongoose.connect(process.env.MONGODB_URI || mongodb);  
@@ -27,12 +29,12 @@ app.use(express.static('public'));
 
 app.use(express.json());
 
-router.get('/', function(req, res)  {
-    console.log('api hit');
-    res.json({message: 'hello'})
-})
+// router.get('/', function(req, res)  {
+//     console.log('api hit');
+//     res.json({message: 'hello'})
+// })
 
-app.use('/test', router);
+// app.use('/test', router);
 
 // initialize routes
 app.use('/api/user',userRoutes);
@@ -50,7 +52,7 @@ app.use(function(err,req,res,next){
 
 
 // listen for requests
-app.listen(process.env.port || 5000, function(){
+app.listen(8081, function(){
     console.log('Ready to Go!');
 });
 
